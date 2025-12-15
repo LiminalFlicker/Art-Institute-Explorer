@@ -1,11 +1,18 @@
 // import { useState } from "react";
 
+import { Routes, Route } from "react-router";
 import "./App.css";
+import { MainLayout } from "./layouts/MainLayout";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
-      <h1>Art Institute Explorer</h1>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
     </>
   );
 }
