@@ -1,14 +1,22 @@
 import { type FormEventHandler } from "react";
+import { searchArtwork } from "../utils/apiHelper";
+
+const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.currentTarget);
+  const searchQuery = formData.get("searchArt") as string;
+
+  if (searchQuery) {
+    console.log(searchQuery);
+    const results = searchArtwork({
+      api_url: "https://api.artic.edu/api/v1/artworks/search",
+      query: `?q=${searchQuery}`,
+    });
+    console.log("form", results);
+  }
+};
 
 export default function NavBar() {
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    const searchQuery = new FormData(event.currentTarget).get("searchArt");
-    if (searchQuery) {
-      console.log(searchQuery);
-    }
-  };
-
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
