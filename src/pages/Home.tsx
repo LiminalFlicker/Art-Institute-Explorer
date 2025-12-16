@@ -10,10 +10,10 @@ export default function Home() {
 
   return (
     <>
-      {artSearchResults === undefined ? (
+      {artSearchResults.length === 0 ? (
         <h1>No art here </h1>
       ) : (
-        <ArtworkCard artwork={artSearchResults[0]} />
+        <ArtworkCard artwork={artSearchResults[4]} />
       )}
     </>
   );
