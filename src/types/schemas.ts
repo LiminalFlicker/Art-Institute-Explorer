@@ -5,7 +5,7 @@ export const ArtworkSchema = z.object({
   title: z.string(),
   artist_title: z.string(),
   image_id: z.number(),
-  short_description: z.string(),
+  short_description: z.string().optional(),
 });
 
 export const qResultsArtsSchema = z.object({
@@ -15,11 +15,15 @@ export const qResultsArtsSchema = z.object({
   date_display: z.string().optional(),
   artist_display: z.string().optional(),
   thumbnail: z.object({ lqip: z.url() }),
+  //   short_description: z.string().optional(),
+  short_description: z.string().nullable().default("No descrioptin"),
+  artist_title: z.string().optional(),
 });
 
 export const qResultsArtsSchemaArray = z.array(qResultsArtsSchema);
 
-export type ResultsArts = z.infer<typeof qResultsArtsSchemaArray>;
+export type ResultsArtsArray = z.infer<typeof qResultsArtsSchemaArray>;
+export type ResultsArts = z.infer<typeof qResultsArtsSchema>;
 export type Artwork = z.infer<typeof ArtworkSchema>;
 
 //https://api.artic.edu/api/v1/artworks/search?q=picasso&fields=id,title,artist_display,date_display,main_reference_number

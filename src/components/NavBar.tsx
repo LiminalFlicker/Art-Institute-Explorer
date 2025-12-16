@@ -1,22 +1,30 @@
 import { type FormEventHandler } from "react";
 import { searchArtwork } from "../utils/apiHelper";
-
-const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-  event.preventDefault();
-  const formData = new FormData(event.currentTarget);
-  const searchQuery = formData.get("searchArt") as string;
-
-  if (searchQuery) {
-    console.log(searchQuery);
-    const results = await searchArtwork({
-      api_url: "https://api.artic.edu/api/v1/artworks/search",
-      query: `?q=${searchQuery}`,
-    });
-    console.log("form", results);
-  }
-};
+import { useContext } from "react";
+import { ArtContext } from "../contexts/ArtContext";
 
 export default function NavBar() {
+  const { updateResults } = useContext(ArtContext);
+
+  const queryFields =
+    "&fields=id,title,artist_display,date_display,api_link,%20thumbnail,short_description,artist_title";
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchQuery = formData.get("searchArt") as string;
+
+    if (searchQuery) {
+      console.log("Search: ", searchQuery);
+      const results = await searchArtwork({
+        api_url: "https://api.artic.edu/api/v1/artworks/search",
+        query: `?q=${searchQuery}${queryFields}`,
+      });
+      console.log("Results returned from searchArtworks():\n", results);
+      updateResults(results);
+    }
+  };
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">

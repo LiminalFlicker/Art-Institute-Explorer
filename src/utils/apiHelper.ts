@@ -4,13 +4,12 @@ import { z } from "zod";
 
 export async function searchArtwork({
   api_url = "https://api.artic.edu/api/v1/artworks/search",
-  query = "?q=picasso",
+  query = "?q=picasso&fields=id,title,artist_display,date_display,api_link,%20thumbnail, short_description",
 }: {
   api_url: string;
   query: string;
-}): Promise<ResultsArts> {
+}): Promise<ResultsArts[]> {
   const response = await fetch(api_url + query);
-  console.log(response.body);
 
   if (!response.ok) throw new Error(`Fetch error: ${response.status}`);
 
