@@ -1,14 +1,14 @@
 import { type FormEventHandler } from "react";
 import { searchArtwork } from "../utils/apiHelper";
 
-const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
   const searchQuery = formData.get("searchArt") as string;
 
   if (searchQuery) {
     console.log(searchQuery);
-    const results = searchArtwork({
+    const results = await searchArtwork({
       api_url: "https://api.artic.edu/api/v1/artworks/search",
       query: `?q=${searchQuery}`,
     });
@@ -28,7 +28,7 @@ export default function NavBar() {
             type="text"
             name="searchArt"
             placeholder="Search Art"
-            className="input input-bordered w-24 md:w-auto"
+            className="input input-bordered w-65 md:w-auto"
           />
           <button type="submit" className="btn ml-3">
             Search

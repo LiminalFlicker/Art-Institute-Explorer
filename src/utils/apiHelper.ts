@@ -1,7 +1,6 @@
-import { JSONSchema } from "zod/v4/core";
-import type { Artwork, ResultsArts } from "../types/schemas.ts";
-import { ArtworkSchema, qResultsArtsSchema } from "../types/schemas.ts";
-import { json, z } from "zod";
+import type { ResultsArts } from "../types/schemas.ts";
+import { qResultsArtsSchemaArray } from "../types/schemas.ts";
+import { z } from "zod";
 
 export async function searchArtwork({
   api_url = "https://api.artic.edu/api/v1/artworks/search",
@@ -12,10 +11,18 @@ export async function searchArtwork({
 }): Promise<ResultsArts> {
   const response = await fetch(api_url + query);
   console.log(response.body);
+
   if (!response.ok) throw new Error(`Fetch error: ${response.status}`);
+
   const resData = await response.json();
   console.log(resData);
-  const { data, error, success } = qResultsArtsSchema.safeParse(resData);
+
+  const { data, error, success } = qResultsArtsSchemaArray.safeParse(
+    resData.data
+  );
+
   if (!success) throw new Error(z.prettifyError(error));
-  return jsonData;
+  return data;
 }
+
+//https://api.artic.edu/api/v1/artworks/search?q=picasso&fields=id,title,artist_display,date_display,api_link,%20thumbnail
