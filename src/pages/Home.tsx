@@ -10,11 +10,18 @@ export default function Home() {
 
   return (
     <>
-      {artSearchResults.length === 0 ? (
+      {/* {artSearchResults.length === 0 ? (
         <h1>No art here </h1>
       ) : (
-        <ArtworkCard artwork={artSearchResults[4]} />
-      )}
+        artSearchResults.forEach((element) => {
+          <ArtworkCard artwork={element} />;
+        })
+      )} */}
+      <div className="flex flex-wrap">
+        {artSearchResults.map((artwork) => (
+          <ArtworkCard artwork={artwork} />
+        ))}
+      </div>
     </>
   );
 }

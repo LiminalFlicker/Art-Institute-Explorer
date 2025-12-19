@@ -18,6 +18,7 @@ export const qResultsArtsSchema = z.object({
   //   short_description: z.string().optional(),
   short_description: z.string().nullable().default("No descrioptin"),
   artist_title: z.string().optional(),
+  image_id: z.string(),
 });
 
 export const qResultsArtsSchemaArray = z.array(qResultsArtsSchema);

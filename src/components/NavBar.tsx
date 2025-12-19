@@ -7,7 +7,7 @@ export default function NavBar() {
   const { updateResults } = useContext(ArtContext);
 
   const queryFields =
-    "&fields=id,title,artist_display,date_display,api_link,%20thumbnail,short_description,artist_title";
+    "&fields=id,title,artist_display,date_display,api_link,%20thumbnail,short_description,artist_title,image_id";
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -26,23 +26,22 @@ export default function NavBar() {
   };
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
-      <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Art Explorer</a>
-      </div>
-      <div className="flex gap-2">
-        <form action="submit" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="searchArt"
-            placeholder="Search Art"
-            className="input input-bordered w-65 md:w-auto"
-          />
-          <button type="submit" className="btn ml-3">
-            Search
-          </button>
-        </form>
-      </div>
+    <div className="navbar flex-col bg-base-100 shadow-sm mb-2">
+      <h1 className="text-2xl font-serif text-shadow-2xs font-bold mt-1.5 mb-1.5">
+        Art Explorer
+      </h1>
+
+      <form className="flex" action="submit" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="searchArt"
+          placeholder="Search Art"
+          className="input rounded-r-md"
+        />
+        <button type="submit" className="btn rounded-l-md">
+          Search
+        </button>
+      </form>
     </div>
   );
 }
